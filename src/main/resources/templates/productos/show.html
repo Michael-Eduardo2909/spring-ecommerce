@@ -105,7 +105,7 @@
         <td><a  class="btn btn-warning" th:href="@{productos/edit/{id} (id=${producto.id}) }">Editar</a> </td>
         <td>
 		<!--	<a  class="btn btn-danger" th:href="@{productos/delete/{id} (id=${producto.id}) }">Eliminar</a> -->
-		<a class="btn btn-danger" href="#" th:onclick="'confirmarEliminacion(' + ${producto.id} + ')'">Eliminar</a>
+		<a class="btn btn-danger" href="#"  th:onclick="'confirmarEliminacion(' + ${producto.id} + ')'">Eliminar</a>
 
 		</td>
       </tr>       
@@ -131,38 +131,49 @@
 <!-- ============================================================= -->
 
 <!-- AlertifyJS CSS y JS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
 <script>
   function confirmarEliminacion(id) {
-    alertify.confirm('Confirmación', '¿Estás seguro de eliminar este producto?',
-      function () {
-        alertify.success('Producto eliminado');
-        setTimeout(function () {
-          window.location.href = '/productos/delete/' + id;
-        }, 1000); // Espera un segundo antes de redireccionar
-      },
-      function () {
-        alertify.error('Eliminación cancelada');
-      }).set({
-        labels: {ok: 'Sí', cancel: 'Cancelar'},
-        transition: 'fade',
-        closable: false,
-        reverseButtons: true,
-        defaultFocus: "cancel"
-      });
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: '¡Eliminado!',
+          text: 'El producto fue eliminado correctamente.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
 
-    // Añadir clases Bootstrap a los botones después de que se crean
-    setTimeout(() => {
-      document.querySelector('.ajs-ok').classList.add('btn', 'btn-sm', 'btn-danger');
-      document.querySelector('.ajs-cancel').classList.add('btn', 'btn-sm', 'btn-secondary');
-    }, 100);
+        // Esperar antes de redirigir
+        setTimeout(() => {
+          window.location.href = '/productos/delete/' + id;
+        }, 1600);
+
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          title: 'Cancelado',
+          text: 'La eliminación fue cancelada.',
+          icon: 'info',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }
+    });
   }
 </script>
+
 
 
 
