@@ -38,8 +38,6 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-	
-	<!-- 
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item"><a class="nav-link"
@@ -48,23 +46,6 @@
             href="login.html">Login</a></li>
           </ul>
         </div>
-		-->
-		<div class="collapse navbar-collapse" id="navbarResponsive">
-		      <ul class="navbar-nav ml-auto">
-		        <li class="nav-item dropdown"><a
-		          class="nav-link dropdown-toggle" href="#"
-		          id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-		          aria-haspopup="true" aria-expanded="false"> ADMIN </a>
-		          <div class="dropdown-menu"
-		          aria-labelledby="navbarDropdownMenuLink">
-		          <a class="dropdown-item" th:href="@{/productos}">Productos</a> 
-				  <a class="dropdown-item" href="#">Ordenes</a> 
-				  <a class="dropdown-item" href="#">Usuarios</a> <a
-		          class="dropdown-item" href="#">Salir</a>
-		        </div></li>
-		      </ul>
-		    </div>
-		
       </div>
     </nav>
 
@@ -80,25 +61,26 @@
       <!-- Page Features -->
       <div class="row text-center">
 
-        <div class="col-lg-3 col-md-6 mb-4" th:each="producto: ${productos}" >
-          <div class="card h-100">
-            <img class="card-img-top"    th:src="@{/images/{img} (img=${producto.imagen})}" alt="">
-            <div class="card-body">
-              <p class="card-text"  th:text="${producto.nombre}"></p>
-            </div>
-            <div class="card-footer">
-              <a href="productohome.html" class="btn btn-success">Ver producto</a>
-            </div>
-          </div>
-        </div>
+		<div class="col-lg-3 col-md-6 mb-4" th:each="producto: ${productos}" >
+		   <div class="card h-100">
+		      <img class="card-img-top"    th:src="@{/images/{img} (img=${producto.imagen})}" alt="">
+		      <div class="card-body">
+		       <p class="card-text"  th:text="${producto.nombre}"></p>
+		     </div>
+		     <div class="card-footer">
+		      <a href="productohome.html" class="btn btn-success">Ver producto</a>
+		    </div>
+		  </div>
+		</div>
 
         
+        </div>
 
       </div>
       <!-- /.row -->
 
     </div>
-    <!-- /.container -->
+    <!-- /.container --> 
 
     <!-- Footer -->
     <footer class="py-5 bg-dark">
