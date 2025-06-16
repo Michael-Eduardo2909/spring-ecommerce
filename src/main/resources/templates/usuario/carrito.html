@@ -24,10 +24,9 @@
 <body>
 
 	<!-- Navigation -->
-	<div th:include="usuario/template_usuario.html::header" th:if="${sesion==null}">	
-	</div>
+	<div th:insert="~{usuario/template_usuario.html::header}" th:if="${sesion==null}"></div>	
+	<div th:insert="~{usuario/template_usuario.html::header-user}" th:unless="${sesion==null}"></div>
 	
-	<div th:include="usuario/template_usuario.html::header-user" th:unless="${sesion==null}"> </div>
 
 	<!-- Page Content -->
 	<div class="container">
@@ -62,7 +61,7 @@
 									<td th:text="${dorden.precio}"></td>
 									<td th:text="${dorden.cantidad}"></td>
 									<td th:text="${dorden.total}"></td>
-									<td><a  class="btn btn-danger">Quitar</a></td>
+									<td>	<a href="#" class="btn btn-danger" th:onclick="'confirmarQuitar(' + ${dorden.producto.id} + ')'">Quitar</a></td>
 								</tr>
 							</tbody>
 						</table>
@@ -90,6 +89,52 @@
 	<!-- Bootstrap core JavaScript -->
 	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	
+	
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	
+	
+	
+	<!-- --------- -->
+	<script>
+	  function confirmarQuitar(id) {
+	    Swal.fire({
+	      title: '¿Estás seguro?',
+	      text: "¿Deseas quitar este producto del carrito?",
+	      icon: 'warning',
+	      showCancelButton: true,
+	      confirmButtonColor: '#dc3545', // rojo
+	      cancelButtonColor: '#6c757d', // gris
+	      confirmButtonText: 'Sí, quitar',
+	      cancelButtonText: 'Cancelar'
+	    }).then((result) => {
+	      if (result.isConfirmed) {
+	        Swal.fire({
+	          title: '¡Quitado!',
+	          text: 'El producto fue eliminado del carrito.',
+	          icon: 'success',
+	          timer: 1500,
+	          showConfirmButton: false
+	        });
+
+	        setTimeout(() => {
+	          window.location.href = '/delete/cart/' + id;
+	        }, 1600);
+	      } else {
+	        Swal.fire({
+	          title: 'Cancelado',
+	          text: 'El producto no fue eliminado.',
+	          icon: 'info',
+	          timer: 1500,
+	          showConfirmButton: false
+	        });
+	      }
+	    });
+	  }
+	</script>
+
 
 </body>
 
