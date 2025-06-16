@@ -46,7 +46,7 @@ public class HomeController {
 		
 		return "usuario/home";
 	}
-	
+	 
 	
 	//NUEVO METODO
 	@GetMapping("productohome/{id}")
@@ -64,9 +64,10 @@ public class HomeController {
 	}
 
 	
-	// AÑADE PRODUCTOS AL CARRITO DE COMPRAS
+	// AÑADIR PRODUCTOS AL CARRITO DE COMPRAS
 	@PostMapping("/cart")
-	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad) {
+	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, 
+														Model model) {
 		DetalleOrden detalleOrden = new DetalleOrden();
 		Producto producto = new Producto();
 		double sumaTotal = 0; //suma todos los totales de los productos añadidos
@@ -74,7 +75,22 @@ public class HomeController {
 		Optional<Producto> optionalProducto = productoService.get(id);
 		log.info("Producto añadido: {}", optionalProducto.get());
 		log.info("Cantidad : {}", cantidad);
+		producto = optionalProducto.get();
 		
+		detalleOrden.setCantidad(cantidad);
+		detalleOrden.setPrecio(producto.getPrecio());
+		detalleOrden.setNombre(producto.getNombre());
+		detalleOrden.setTotal(producto.getPrecio() * cantidad);
+		detalleOrden.setProducto(producto);
+		
+		detalles.add(detalleOrden); //añadiendo cada detalleorden a la lista
+		
+		//sumar todos los totales de los productos q esten en esa lista
+		sumaTotal=detalles.stream().mapToDouble(dt->dt.getTotal()).sum();
+		
+		orden.setTotal(sumaTotal); //SUMA DE TODA LA LISTA DEL CARRITO
+		model.addAttribute("cart", detalles);
+		model.addAttribute("orden", orden);
 		
 		return "usuario/carrito";
 	}
