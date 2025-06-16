@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.curso.ecommerce.model.Producto;
@@ -36,23 +37,6 @@ public class HomeController {
 	
 	
 	//NUEVO METODO
-//	@GetMapping("productohome/{id}")
-//	public String productoHome(@PathVariable Integer id, Model model) {
-//	    log.info("Id producto enviado como parámetro {}", id);
-//
-//	    Optional<Producto> productoOptional = productoService.get(id);
-//
-//	    if (productoOptional.isPresent()) {
-//	        model.addAttribute("producto", productoOptional.get()); // 👈 Pasas solo el Producto, no el Optional
-//	    } else {
-//	        log.warn("Producto con id {} no encontrado", id);
-//	        return "redirect:/"; // 👈 Puedes redirigir o mostrar una vista personalizada de error
-//	    }
-//
-//	    return "usuario/productohome";
-//	}
-	
-	
 	@GetMapping("productohome/{id}")
 	public String productoHome(@PathVariable Integer id, Model model) {
 	    log.info("Id producto enviado como parámetro {}", id);
@@ -68,6 +52,11 @@ public class HomeController {
 	}
 
 	
+	//
+	@PostMapping("/cart")
+	public String addCart() {
+		return "usuario/carrito";
+	}
 	
 	
 
