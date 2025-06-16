@@ -135,7 +135,7 @@ public class HomeController {
 	}
 	
 	
-	
+	//VER CARRITO DESDE HOME
 	@GetMapping("/getCart")
 	public String getCart(Model model) {
 		
@@ -144,6 +144,16 @@ public class HomeController {
 		return "usuario/carrito";
 	}
 	
+	
+	
+	
+	//
+	@GetMapping("/order")
+	public String order() {
+		
+		
+		return "usuario/resumenorden";
+	}
 	
 	
 	
