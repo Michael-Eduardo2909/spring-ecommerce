@@ -208,7 +208,7 @@ public class HomeController {
 	
 	
 	
-	//METODO PARA GUARDAR LA BUSQUEDA
+	//METODO PARA GUARDAR LA BUSQUEDA...
 	@PostMapping("/search")
 	public String searchProducto(@RequestParam String nombre, Model model) {
 		log.info("Nombre del producto: {}", nombre);

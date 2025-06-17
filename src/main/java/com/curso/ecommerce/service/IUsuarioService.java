@@ -9,4 +9,7 @@ public interface IUsuarioService {
 	//DEFINIR LOS METODOS
 	Optional<Usuario> findById(Integer id); 
 	
+	//METODO GUARDAR USUARIO
+	Usuario save(Usuario usuario);
+	
 }
