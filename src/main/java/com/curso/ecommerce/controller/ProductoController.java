@@ -17,8 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.curso.ecommerce.model.Producto;
 import com.curso.ecommerce.model.Usuario;
+import com.curso.ecommerce.service.IUsuarioService;
 import com.curso.ecommerce.service.ProductoService;
 import com.curso.ecommerce.service.UploadFileService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/productos")
@@ -33,6 +36,9 @@ public class ProductoController {
 	private UploadFileService upload;
 	
 	
+	@Autowired
+	private IUsuarioService usuarioService;
+	///---------------------------------------------------------------------
 	
 	
 	
@@ -48,26 +54,37 @@ public class ProductoController {
 	}
 	
 	@PostMapping("/save")
-	public String save(Producto producto,@RequestParam("img") MultipartFile file) throws IOException  {
-		LOGGER.info("Este es el objeto producto {}", producto);
-		Usuario u = new Usuario(1, "", "", "", "", "", "", "");
-		producto.setUsuario(u);
-		
-		
-		//LOGICA PARA SUBIR IMAGEN AL SERVIDOR
-		//imagen
-		if(producto.getId() == null) { // cuando se crea un producto
-			String nombreImagen = upload.saveImage(file);
-			producto.setImagen(nombreImagen);
-		}
-		else {
-			
-		}
-		 
-		
-		productoService.save(producto);
-		return "redirect:/productos";
+	public String save(Producto producto, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
+	    LOGGER.info("Este es el objeto producto {}", producto);
+	    
+	    Object idUsuarioObj = session.getAttribute("idusuario");
+	    if (idUsuarioObj == null) {
+	        LOGGER.error("Error: no hay usuario en sesión.");
+	        return "redirect:/login"; // o muestra un mensaje de error
+	    }
+
+	    int idUsuario = Integer.parseInt(idUsuarioObj.toString());
+	    Usuario u = usuarioService.findById(idUsuario).orElse(null);
+
+	    if (u == null) {
+	        LOGGER.error("Error: no se encontró el usuario con ID " + idUsuario);
+	        return "redirect:/login";
+	    }
+
+	    producto.setUsuario(u);
+
+	    // Lógica para subir imagen al servidor
+	    if (producto.getId() == null) { // cuando se crea un producto
+	        String nombreImagen = upload.saveImage(file);
+	        producto.setImagen(nombreImagen);
+	    }
+
+	    productoService.save(producto);
+	    return "redirect:/productos";
 	}
+
+	
+	
 	
 	
 	@GetMapping("/edit/{id}")
