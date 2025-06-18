@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.curso.ecommerce.model.Producto;
+import com.curso.ecommerce.service.IOrdenService;
 import com.curso.ecommerce.service.IUsuarioService;
 import com.curso.ecommerce.service.ProductoService;
 
@@ -22,7 +23,8 @@ public class AdministradorController {
 	@Autowired
 	private IUsuarioService usuarioService; 
 	
-	
+	@Autowired
+	private IOrdenService ordenService;
 	//-------------------------------------------------------
 	
 	
@@ -44,6 +46,15 @@ public class AdministradorController {
 		
 		return "administrador/usuarios";
 	}
+	
+	//FUNCIONALIDA PARA VER LAS ORDENES DEL SISTEMA - 46
+	@GetMapping("/ordenes")
+	public String ordenes(Model model) {
+		model.addAttribute("ordenes", ordenService.findAll());
+		
+		return "administrador/ordenes";
+	}
+	
 	
 	
 	
