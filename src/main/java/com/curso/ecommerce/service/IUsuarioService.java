@@ -1,5 +1,6 @@
 package com.curso.ecommerce.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.curso.ecommerce.model.Usuario;
@@ -14,5 +15,10 @@ public interface IUsuarioService {
 	
 	//METODO FILTRAR
 	Optional<Usuario> findByEmail(String email);
+	
+	
+	//METODO Q PERMITA OBTENER TODOS LOS USUARIOS
+	List<Usuario> findAll();
+	
 	
 }
