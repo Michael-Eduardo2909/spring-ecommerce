@@ -12,4 +12,7 @@ public interface IUsuarioService {
 	//METODO GUARDAR USUARIO
 	Usuario save(Usuario usuario);
 	
+	//METODO FILTRAR
+	Optional<Usuario> findByEmail(String email);
+	
 }
