@@ -29,8 +29,10 @@ public class Orden {
 	@OneToMany(mappedBy = "orden")
 	private List<DetalleOrden> detalle;
 	
-	public Orden() {
 	
+	
+	
+	public Orden() {
 	}
 
 	public Orden(Integer id, String numero, Date fechaCreacion, Date fechaRecibida, double total) {
