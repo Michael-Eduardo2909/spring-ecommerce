@@ -24,8 +24,14 @@
 <body>
 
 	<!-- Navigation -->
-	<div th:insert="~{usuario/template_usuario.html::header}" th:if="${sesion==null}"></div>	
-	<div th:insert="~{usuario/template_usuario.html::header-user}" th:unless="${sesion==null}"></div>
+	<div th:insert="~{usuario/template_usuario.html::header}" th:if="${sesion==null}">
+		<!-- mostrara este header EN CARRITO si el usuario NO ESTA logeado -->
+	</div>	
+	
+	
+	<div th:insert="~{usuario/template_usuario.html::header-user}" th:unless="${sesion==null}">
+		<!-- mostrara este header EN CARRITO si el usuario SI ESTA logeado -->
+	</div>
 	
 
 	<!-- Page Content -->
